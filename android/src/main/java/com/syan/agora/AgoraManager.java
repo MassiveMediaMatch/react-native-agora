@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.agora.rtc.IMetadataObserver;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.BeautyOptions;
@@ -52,6 +51,13 @@ public class AgoraManager {
             }
         }
         return sAgoraManager;
+    }
+
+    public void registerAudioFrameObserver(com.syan.agora.IAudioFrameObserver observer) throws ReactNativeAgoraException {
+        int res = mRtcEngine.registerAudioFrameObserver((io.agora.rtc.IAudioFrameObserver) observer);
+        if (res < 0) {
+            throw new ReactNativeAgoraException("registerAudioFrameObserver Failed", res);
+        }
     }
 
     private FRAME_RATE getVideoEncoderEnum (int val) {
