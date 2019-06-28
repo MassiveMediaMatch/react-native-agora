@@ -86,7 +86,7 @@ class RtcEngine {
      * @param eventType
      */
     public static off(eventType: string) {
-        AgoraEventEmitter.removeListener(eventType, () => {});
+        AgoraEventEmitter.removeAllListeners(eventType);
         this.eventTypes.delete(eventType);
     }
 
@@ -99,7 +99,7 @@ class RtcEngine {
      */
     public static removeAllListeners() {
         for (let eventType of this.eventTypes) {
-            AgoraEventEmitter.removeListener(eventType, () => {});
+            AgoraEventEmitter.removeAllListeners(eventType);
         }
         this.eventTypes.clear();
     }
