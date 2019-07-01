@@ -53,11 +53,25 @@ public class AgoraManager {
         return sAgoraManager;
     }
 
-    public void registerAudioFrameObserver(com.syan.agora.IAudioFrameObserver observer) throws ReactNativeAgoraException {
-        int res = mRtcEngine.registerAudioFrameObserver((io.agora.rtc.IAudioFrameObserver) observer);
+    public void registerAudioFrameObserver(final com.syan.agora.IAudioFrameObserver observer) throws ReactNativeAgoraException {
+        int res = mRtcEngine.registerAudioFrameObserver(new io.agora.rtc.IAudioFrameObserver() {
+            @Override
+            public boolean onRecordFrame(byte[] samples, int numOfSamples, int bytesPerSample, int channels, int samplesPerSec) {
+                return observer.onRecordFrame(samples, numOfSamples, bytesPerSample, channels, samplesPerSec);
+            }
+
+            @Override
+            public boolean onPlaybackFrame(byte[] samples, int numOfSamples, int bytesPerSample, int channels, int samplesPerSec) {
+                return observer.onPlaybackFrame(samples, numOfSamples, bytesPerSample, channels, samplesPerSec);
+            }
+        });
         if (res < 0) {
             throw new ReactNativeAgoraException("registerAudioFrameObserver Failed", res);
         }
+    }
+
+    public int setRecordingAudioFrameParameters(int sampleRate, int channel, int mode, int samplesPerCall) {
+        return mRtcEngine.setRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
     }
 
     private FRAME_RATE getVideoEncoderEnum (int val) {
