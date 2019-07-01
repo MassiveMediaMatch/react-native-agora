@@ -36,6 +36,10 @@ declare class RtcEngine {
      */
     static on(eventType: string, listener: (...args: any[]) => any): void;
     /**
+     * This method removes all listeners
+     */
+    static removeAllListeners(): void;
+    /**
      * renew token
      *
      * This method renews a new token.
