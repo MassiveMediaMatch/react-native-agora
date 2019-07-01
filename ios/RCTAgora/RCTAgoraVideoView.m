@@ -39,7 +39,7 @@
 -(void)setRemoteUid:(NSInteger)remoteUid {
   _remoteUid = remoteUid;
   AgoraRtcVideoCanvas *canvas = [[AgoraRtcVideoCanvas alloc] init];
-  if (_remoteUid > 0) {
+  if (_remoteUid != 0) {
     canvas.uid = _remoteUid;
     canvas.view = self;
     canvas.renderMode = _renderMode;
@@ -50,7 +50,7 @@
 
 -(void) willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
-  if (_remoteUid > 0) {
+  if (_remoteUid != 0) {
     [_rtcEngine setRemoteRenderMode:_remoteUid mode:_renderMode];
   } else {
     [_rtcEngine setLocalRenderMode:_renderMode];
