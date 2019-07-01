@@ -40,7 +40,7 @@ const AgoraEventEmitter = new NativeEventEmitter(Agora);
  */
 class RtcEngine {
 
-    private static eventTypes: Set<string> = new Set<string>();
+    private static readonly AG_PREFIX: string = 'ag_rtc';
 
     /**
      * Creates a RtcEngine Object internal.
@@ -75,33 +75,7 @@ class RtcEngine {
      * @param listener
      */
     public static on(eventType: string, listener: (...args: any[]) => any) {
-        this.eventTypes.add(eventType);
-        AgoraEventEmitter.addListener(eventType, listener);
-    }
-
-    /**
-     * remove event listeners
-     *
-     * This method unsubscribes specified eventType related all listeners. You should call this method when you want to unsubscribe some eventType.
-     * @param eventType
-     */
-    public static off(eventType: string) {
-        AgoraEventEmitter.removeListener(eventType, () => {});
-        this.eventTypes.delete(eventType);
-    }
-
-    /**
-     * remove all events listeners
-     *
-     * This method unsubscribes all eventTypes related listeners.
-     *
-     * @param token
-     */
-    public static removeAllListeners() {
-        for (let eventType of this.eventTypes) {
-            AgoraEventEmitter.removeListener(eventType, () => {});
-        }
-        this.eventTypes.clear();
+        AgoraEventEmitter.addListener(`${RtcEngine.AG_PREFIX}${eventType}`, listener);
     }
 
     /**
@@ -398,17 +372,6 @@ class RtcEngine {
      */
     public static enableAudioVolumeIndication(interval: number, smooth: number) {
         Agora.enableAudioVolumeIndication(interval, smooth);
-    }
-
-    /**
-     * create data stream
-     *
-     * This method creates data stream with options
-     *
-     * @param options {@link DataStreamOption}
-     */
-    public static createDataStream(options: DataStreamOption) {
-        return Agora.createDataStream(options);
     }
 
     /**
@@ -920,6 +883,16 @@ class RtcEngine {
     }
 
     /**
+     * @deprecated sendMessage
+     * sendMessage
+     */
+
+    /**
+     * @deprecated createDataStream
+     * createDataStream
+     */
+
+    /**
      * @deprecated setupLocalVideo
      * setupLocalVideo 
      */
@@ -1108,19 +1081,6 @@ class RtcEngine {
      */
     public static setLog(filepath: string, level: number, maxfileSize: number): Promise<any> {
         return Agora.setLog(filepath, level, maxfileSize)
-    }
-
-    /**
-     * send stream message
-     *
-     * This method sends stream message by specified uid
-     *
-     * @param uid
-     * @param data
-     * @returns Promise<{success, value}>
-     */
-    public static sendMessage(streamID: number, data: any, reliable: boolean, ordered: boolean): Promise<any> {
-        return Agora.sendMessage({streamID, data, reliable, ordered});
     }
 
     /**
