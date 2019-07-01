@@ -1,4 +1,4 @@
-import { Option, Callback, AudioMixingOption, DataStreamOption, PlayEffectOption, AudioRecordingOption, AudioFrameOption, MixedAudioFrameOption, ImageOption, VideoStreamOption, DefaultVideoStreamOption, InjectStreamOption, RemoveInjectStreamOption, PublishStreamOption, RemovePublishStreamOption, LiveTranscodingOption, PositionOption, BeautyOption, LastmileProbeConfig, CameraCapturerConfiguration } from "./types";
+import { Option, Callback, AudioMixingOption, PlayEffectOption, AudioRecordingOption, AudioFrameOption, MixedAudioFrameOption, ImageOption, VideoStreamOption, DefaultVideoStreamOption, InjectStreamOption, RemoveInjectStreamOption, PublishStreamOption, RemovePublishStreamOption, LiveTranscodingOption, PositionOption, BeautyOption, LastmileProbeConfig, CameraCapturerConfiguration } from "./types";
 /**
  * RtcEngine is the javascript object for control agora native sdk through react native bridge.
  *
@@ -7,7 +7,7 @@ import { Option, Callback, AudioMixingOption, DataStreamOption, PlayEffectOption
  * Other methods of the RtcEngine object serve for agora native sdk and set up error logging.
  */
 declare class RtcEngine {
-    private static eventTypes;
+    private static readonly AG_PREFIX;
     /**
      * Creates a RtcEngine Object internal.
      *
@@ -35,21 +35,6 @@ declare class RtcEngine {
      * @param listener
      */
     static on(eventType: string, listener: (...args: any[]) => any): void;
-    /**
-     * remove event listeners
-     *
-     * This method unsubscribes specified eventType related all listeners. You should call this method when you want to unsubscribe some eventType.
-     * @param eventType
-     */
-    static off(eventType: string): void;
-    /**
-     * remove all events listeners
-     *
-     * This method unsubscribes all eventTypes related listeners.
-     *
-     * @param token
-     */
-    static removeAllListeners(): void;
     /**
      * renew token
      *
@@ -257,14 +242,6 @@ declare class RtcEngine {
      * @param smooth
      */
     static enableAudioVolumeIndication(interval: number, smooth: number): void;
-    /**
-     * create data stream
-     *
-     * This method creates data stream with options
-     *
-     * @param options {@link DataStreamOption}
-     */
-    static createDataStream(options: DataStreamOption): any;
     /**
      * check for mobile phone speaker enabled
      *
@@ -633,6 +610,14 @@ declare class RtcEngine {
      */
     static removeInjectStreamUrl(options: RemoveInjectStreamOption): Promise<any>;
     /**
+     * @deprecated sendMessage
+     * sendMessage
+     */
+    /**
+     * @deprecated createDataStream
+     * createDataStream
+     */
+    /**
      * @deprecated setupLocalVideo
      * setupLocalVideo
      */
@@ -774,16 +759,6 @@ declare class RtcEngine {
      * @returns Promise<{success, value}>
      */
     static setLog(filepath: string, level: number, maxfileSize: number): Promise<any>;
-    /**
-     * send stream message
-     *
-     * This method sends stream message by specified uid
-     *
-     * @param uid
-     * @param data
-     * @returns Promise<{success, value}>
-     */
-    static sendMessage(streamID: number, data: any, reliable: boolean, ordered: boolean): Promise<any>;
     /**
      * add publish stream url
      *
