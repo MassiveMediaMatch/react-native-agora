@@ -70,6 +70,13 @@ public class AgoraManager {
         }
     }
 
+    public void unRegisterAudioFrameObserver() throws ReactNativeAgoraException {
+        int res = mRtcEngine.registerAudioFrameObserver(null);
+        if (res < 0) {
+            throw new ReactNativeAgoraException("unRegisterAudioFrameObserver Failed", res);
+        }
+    }
+
     public int setRecordingAudioFrameParameters(int sampleRate, int channel, int mode, int samplesPerCall) {
         return mRtcEngine.setRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
     }
