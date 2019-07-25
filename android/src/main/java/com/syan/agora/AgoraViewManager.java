@@ -44,13 +44,18 @@ public class AgoraViewManager extends SimpleViewManager<AgoraVideoView> {
 
     @ReactProp(name = "zOrderMediaOverlay")
     public void setZOrderMediaOverlay(final AgoraVideoView agoraVideoView, boolean zOrderMediaOverlay) {
+        agoraVideoView.setZOrderMediaOverlay(zOrderMediaOverlay);
         Integer remoteUid = agoraVideoView.getRemoteUid();
         if (remoteUid != null) {
             surfaceView = AgoraManager.getInstance().getSurfaceView(remoteUid);
-            surfaceView.setZOrderMediaOverlay(zOrderMediaOverlay);
+            if (surfaceView != null) {
+                surfaceView.setZOrderMediaOverlay(zOrderMediaOverlay);
+            }
         } else {
             surfaceView = AgoraManager.getInstance().getLocalSurfaceView();
-            surfaceView.setZOrderMediaOverlay(zOrderMediaOverlay);
+            if (surfaceView != null) {
+                surfaceView.setZOrderMediaOverlay(zOrderMediaOverlay);
+            }
         }
     }
 
