@@ -160,7 +160,7 @@ export interface AudioMixingOption {
 }
 
 export interface PlayEffectOption {
-  soundId: number,
+  soundid: number,
   filepath: String,
   loopcount: number,
   pitch: number,
