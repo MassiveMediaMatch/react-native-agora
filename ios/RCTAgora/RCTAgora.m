@@ -761,7 +761,7 @@ RCT_EXPORT_METHOD(playEffect
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
   NSInteger res = [self.rtcEngine playEffect:(int)[options[@"soundid"] integerValue]
-                                    filePath:[options[@"filepath"] stringValue]
+                                    filePath:[options valueForKey:@"filepath"]
                                    loopCount:(int)[options[@"loopcount"] integerValue]
                                        pitch:[options[@"pitch"] doubleValue]
                                          pan:[options[@"pan"] doubleValue]
